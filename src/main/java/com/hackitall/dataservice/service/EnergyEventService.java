@@ -1,9 +1,8 @@
 package com.hackitall.dataservice.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hackitall.dataservice.entity.EnergyEvent;
 import com.hackitall.dataservice.repository.EnergyEventRepository;
+import com.hackitall.dataservice.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +15,7 @@ public class EnergyEventService {
     EnergyEventRepository energyEventRepository;
 
     public List<EnergyEvent> saveAll(Collection<String> events){
-        List<EnergyEvent> energyEvents = events.stream().map(this::stringToJson).toList();
+        List<EnergyEvent> energyEvents = events.stream().map(JsonUtil::stringToJson).toList();
         return energyEventRepository.saveAll(energyEvents);
-    }
-
-    private EnergyEvent stringToJson(String event) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readValue(event, EnergyEvent.class);
-        } catch (JsonProcessingException e) {
-            return null;
-        }
     }
 }

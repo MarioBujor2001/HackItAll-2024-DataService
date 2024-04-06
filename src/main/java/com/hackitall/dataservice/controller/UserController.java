@@ -1,6 +1,8 @@
 package com.hackitall.dataservice.controller;
 
+import com.hackitall.dataservice.cache.EventsCache;
 import com.hackitall.dataservice.entity.Device;
+import com.hackitall.dataservice.entity.EnergyEvent;
 import com.hackitall.dataservice.entity.Space;
 import com.hackitall.dataservice.entity.User;
 import com.hackitall.dataservice.service.SpaceService;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -27,7 +31,10 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
+    @GetMapping("/{email}/spaces")
+    public ResponseEntity<List<EnergyEvent>> getEvents(){
+        return ResponseEntity.ok(EventsCache.getCache());
+    }
     @PostMapping("/{email}/spaces")
     public ResponseEntity<Space> addSpaceToUser(@PathVariable String email,
                                                 @RequestBody Space space){
