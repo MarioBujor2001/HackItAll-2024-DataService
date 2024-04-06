@@ -13,6 +13,8 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private Float consumption = 0.0f;
+    private Boolean status = false;
     @ManyToOne
     @JoinColumn(name = "space_id")
     @JsonIgnore
