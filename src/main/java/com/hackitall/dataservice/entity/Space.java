@@ -10,13 +10,15 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class User {
+public class Space {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String email;
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     @JsonIgnore
-    private String password;
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<Space> spaces;
+    private User user;
+    @OneToMany(mappedBy = "space", orphanRemoval = true)
+    private List<Device> devices;
 }

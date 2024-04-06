@@ -5,18 +5,16 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
-public class User {
+public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String email;
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "space_id")
     @JsonIgnore
-    private String password;
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private List<Space> spaces;
+    private Space space;
 }
